@@ -44,12 +44,12 @@ The Rpi has v8 ARM based Broadcom 64-bit SOC, so to get most performance we want
 Assumed cross-compile environment is AMD64 Ubuntu Linux  
 	  **Binutils**  
 ***Install Dependencies***  
-`sudo apt-get install build-essential libgmp-dev libmpfr-dev libmpc-dev libisl-dev libncurses5-dev bc git-core bison flex libmpfr-dev libmpc-dev libgmp-dev texinfo libreadline6-dev curl`  
+`sudo apt-get install build-essential libgmp-dev libmpfr-dev libmpc-dev libisl-dev libncurses5-dev bc git-core bison flex libmpfr-dev libmpc-dev libgmp-dev texinfo libreadline6-dev curl autoconf automake texinfo `  
 `wget -c https://ftp.gnu.org/gnu/binutils/binutils-2.32.tar.bz2`  
-`tar xvf binutils-2.32.tar.bz2`  
+`time tar xf binutils-2.32.tar.bz2`  
 `cd binutils-2.32`  
 `./configure --disable-nls --enable-lto`  
-`make -j6 CFLAGS="-fmarch=armv8-a -finline-functions -fgcse-after-reload -fipa-cp-clone -floop-interchange -floop-unroll-and-jam -ffast-math -fpeel-loops -fpredictive-commoning -ftree-loop-distribute-patterns -ftree-loop-distribution -ftree-loop-vectorize -ftree-partial-pre -ftree-slp-vectorize -funswitch-loops -fvect-cost-model -pipe"`  
+`time make -j6 CFLAGS="-fmarch=armv8-a -finline-functions -fgcse-after-reload -fipa-cp-clone -floop-interchange -floop-unroll-and-jam -ffast-math -fpeel-loops -fpredictive-commoning -ftree-loop-distribute-patterns -ftree-loop-distribution -ftree-loop-vectorize -ftree-partial-pre -ftree-slp-vectorize -funswitch-loops -fvect-cost-model -pipe"`  
 `sudo make -j6 install`  
 	 **GCC**  
 `wget -c https://mirrors-usa.go-parts.com/gcc/releases/gcc-9.1.0/gcc-9.1.0.tar.xz`  
@@ -59,8 +59,8 @@ Assumed cross-compile environment is AMD64 Ubuntu Linux
  --disable-nls --disable-shared --disable-threads --disable-libssp --disable-decimal-float
  --disable-libquadmath --disable-libvtv --disable-libgomp --disable-libatomic
  --enable-languages=c CFLAGS="-O3 -march=armv8-a -pipe`  
- `make all-gcc -j6`  
- `sudo make install-gcc`  
+ `time make all-gcc -j6`  
+ `time sudo make install-gcc`  
  
 We want to use realtime kernel for latency control statistics
 
@@ -74,7 +74,7 @@ Now we have the default bcmrpi3_defconfig kernel configuration, but it is good t
 
 Start compile:
 
-    make -j4 O=../kernel-out/ ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu-
+    time make -j6 O=../kernel-out/ ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu-
 
 Add QT
 ```
