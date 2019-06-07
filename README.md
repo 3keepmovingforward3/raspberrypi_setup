@@ -47,19 +47,18 @@ Assumed cross-compile environment is AMD64 Ubuntu Linux
 `sudo apt-get install build-essential libgmp-dev libmpfr-dev libmpc-dev libisl-dev libncurses5-dev bc git-core bison flex libmpfr-dev libmpc-dev libgmp-dev texinfo libreadline6-dev curl`  
 `wget -c https://ftp.gnu.org/gnu/binutils/binutils-2.32.tar.bz2`  
 `tar xvf binutils-2.32.tar.bz2`  
-`mkdir binutils-obj && cd binutils-obj`  
-`../binutils-2.32/configure --prefix=/opt/aarch64 --target=aarch64-linux-gnu --disable-nls --enable-lto`  
-`make -j6 CFLAGS="-finline-functions -fgcse-after-reload -fipa-cp-clone -floop-interchange -floop-unroll-and-jam -ffast-math -fpeel-loops -fpredictive-commoning -ftree-loop-distribute-patterns -ftree-loop-distribution -ftree-loop-vectorize -ftree-partial-pre -ftree-slp-vectorize -funswitch-loops -fvect-cost-model"`  
+`cd binutils-2.32`  
+`./configure --disable-nls --enable-lto`  
+`make -j6 CFLAGS="-fmarch=armv8-a -finline-functions -fgcse-after-reload -fipa-cp-clone -floop-interchange -floop-unroll-and-jam -ffast-math -fpeel-loops -fpredictive-commoning -ftree-loop-distribute-patterns -ftree-loop-distribution -ftree-loop-vectorize -ftree-partial-pre -ftree-slp-vectorize -funswitch-loops -fvect-cost-model -pipe"`  
 `sudo make -j6 install`  
-`export PATH=$PATH:/opt/aarch64/bin/`  
 	 **GCC**  
 `wget -c https://mirrors-usa.go-parts.com/gcc/releases/gcc-9.1.0/gcc-9.1.0.tar.xz`  
 `tar xf gcc-9.1.0.tar.xz`  
-`mkdir gcc-out && cd gcc-out`  
-`../gcc-9.1.0/configure --prefix=/opt/aarch64 --target=aarch64-linux-gnu --with-newlib --without-headers
+`cd gcc-9.1.0`  
+`./configure --with-newlib --without-headers
  --disable-nls --disable-shared --disable-threads --disable-libssp --disable-decimal-float
  --disable-libquadmath --disable-libvtv --disable-libgomp --disable-libatomic
- --enable-languages=c`  
+ --enable-languages=c CFLAGS="-O3 -march=armv8-a -pipe`  
  `make all-gcc -j6`  
  `sudo make install-gcc`  
  
